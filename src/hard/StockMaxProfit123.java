@@ -1,6 +1,6 @@
 package hard;
 
-public class Leedcode123 {
+public class StockMaxProfit123 {
 /*
  * Say you have an array for which the ith element is the price of a given stock on day i.
 
@@ -57,7 +57,7 @@ Constraints:
     
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Leedcode123 obj = new Leedcode123();
+		StockMaxProfit123 obj = new StockMaxProfit123();
 		int prices[] = {6,1,3,2,4,7};
 		System.out.println(obj.maxProfit(prices));
 	}
