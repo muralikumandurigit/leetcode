@@ -79,15 +79,8 @@ The number of nodes in the tree is in the range [0, 104].
 	}
 
 	private int nodeMaxDepth(TreeNode node, int i) {
-		int ld = i;
-		int rd = i;
-		if (node.left != null) {
-			ld = nodeMaxDepth(node.left, i+1);
-		}
-		
-		if (node.right != null) {
-			rd = nodeMaxDepth(node.right, i+1);
-		}
+		int ld = node.left == null ? i : nodeMaxDepth(node.left, i+1);
+		int rd = node.right == null ? i : nodeMaxDepth(node.right, i+1);
 		return Math.max(ld, rd);
 	}
 }
