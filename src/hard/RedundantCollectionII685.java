@@ -3,6 +3,7 @@ package hard;
 import java.util.HashMap;
 import java.util.Map;
 
+/*  not solved */
 public class RedundantCollectionII685 {
 
 	/*
