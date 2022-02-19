@@ -1,7 +1,9 @@
 package hard;
 
-import java.util.HashMap; 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class RedundantCollectionII685 {
 /*              I N C O M P L E T E         */
@@ -38,21 +40,82 @@ Every integer represented in the 2D-array will be between 1 and N, where N is th
 	public static void main(String[] args) {
 		RedundantCollectionII685 obj = new RedundantCollectionII685();
 //		int[][] edges = {{1, 2}, {1, 3}, {2, 3}};
-		int[][] edges = {{1, 2}, {2, 3}, {3, 4}, {4, 1}, {1, 5}};
+//		int[][] edges = {{1, 2}, {2, 3}, {3, 4}, {4, 1}, {1, 5}};
+//		int[][] edges = {{5,2},{5,1},{3,1},{3,4},{3,5}};
+		int[][] edges = {{2,1},{3,1},{4,2},{1,4}};
 		int [] result = obj.findRedundantDirectedConnection(edges);
 		System.out.println("Result => " + result[0] + "," + result[1]);
 	}
 
-    public int[] findRedundantDirectedConnection(int[][] edges) {
-        Map<Integer, Integer> emap = new HashMap<Integer, Integer>();
-        for(int i=0; i<edges.length; i++) {
-        	if (emap.containsKey(edges[i][1])) {
-        		return edges[i];
-        	}
-        	else {-----------------------------------
-        		emap.put(edges[i][1], edges[i][0]);
-        	}
-        }
-        return null;
-    }
+	private int getParent (int k, int graph[]) {
+		while (graph[k] > 0) {
+			k = graph[k];
+		}
+		return k;
+	}
+	
+	public int[] findRedundantDirectedConnection(int[][] edges) {
+		// TODO Auto-generated method stub
+		int graph[] = new int[edges.length + 1];
+		boolean foundTwoParents = false;
+		int s1[] = new int[2];
+		int s2[] = new int[2];
+				
+		// Find out the nodes which has two parents
+		for (int i=0; i<edges.length; i++) {
+			if (graph[edges[i][1]] != 0) {
+				s1[0] = graph[edges[i][1]];
+				s1[1] = edges[i][1];
+				
+				s2[0] = edges[i][0];
+				s2[1] = edges[i][1];
+				foundTwoParents = true;
+				// Now s1[1] is having two parents. s1[0] and s2[0]
+				break;
+			}
+			else {
+				graph[edges[i][1]] = edges[i][0];
+			}
+		}
+		
+		// Re-initialize graph.
+		
+		for (int i=1; i<graph.length; i++) {
+			graph[i] = 0;
+		}
+		
+		
+		// Find out the circle.
+		for (int i=0; i<edges.length; i++) {
+			
+			// If two parents, then remove s2 and see we are good to go. If yes.then s2 is culprit, else s1 is culprit
+			if (foundTwoParents && s2[0] == edges[i][0] && s2[1] == edges[i][1]) {
+				// Remove one node. 
+				continue;
+			}
+			int p0 = getParent(edges[i][0], graph);
+			int p1 = getParent(edges[i][1], graph);
+			if (p0 == p1) {
+				// We got the cycle here...
+				if (foundTwoParents) {
+					if (p0 == graph[s2[1]])
+						return s2;
+					else
+						return s1;				
+				}
+				else {
+					return edges[i];
+				}
+			}
+			
+			for (int j=1; j<graph.length; j++) {
+				graph[j] = graph[j] == p1 ? p0 : graph[j];
+			}
+			graph[edges[i][1]] = p0;
+			graph[p1] = p0;
+		}
+		
+		// No cycle here. So just return s2;
+		return s2;
+	}
 }
