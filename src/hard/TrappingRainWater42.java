@@ -56,7 +56,7 @@ n == height.length
         		mRight = Math.max(mRight, height[i+1]);
         		maxRight[i] = mRight;
         	}
-        }
+        } 
         
         for(int i=1; i<height.length-1; i++) {
         	int waterLevel = Math.min(maxLeft[i], maxRight[i]);
