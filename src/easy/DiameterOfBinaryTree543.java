@@ -69,28 +69,21 @@ The number of nodes in the tree is in the range [1, 104].
 	}
 	
 	int maxDiameter = 0;
-	Map<TreeNode, Integer> height = new HashMap<>();
 
 	private int heightOfBinaryTree(TreeNode root) {
         if(root == null) {
         	return 0;
         }
-        else if (height.containsKey(root)) {
-    		return height.get(root);
-    	}
         else if (root.left == null && root.right == null) {
-        	height.put(root, 0);
         	return 0;
         }
         else if (root.left == null) {
         	int h = 1 + heightOfBinaryTree(root.right);
-        	height.put(root, h);
         	maxDiameter = Math.max(maxDiameter, h);
         	return h;
         }
         else if (root.right == null) {
         	int h = 1 + heightOfBinaryTree(root.left);
-        	height.put(root, h);
         	maxDiameter = Math.max(maxDiameter, h);
         	return h;
         }
@@ -98,7 +91,6 @@ The number of nodes in the tree is in the range [1, 104].
         	int lh = 1 + heightOfBinaryTree(root.left);
         	int rh = 1 + heightOfBinaryTree(root.right);
         	int h =  Math.max(lh, rh);
-        	height.put(root, h);
         	maxDiameter = Math.max(maxDiameter, lh + rh);
         	return h;
         }

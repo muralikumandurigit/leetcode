@@ -19,7 +19,7 @@ Given a string s containing only digits, return the number of ways to decode it.
 
 The answer is guaranteed to fit in a 32-bit integer.
 
- 
+  
 
 Example 1:
 
@@ -53,9 +53,9 @@ s contains only digits and may contain leading zero(s).
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		DecodeWays91 obj = new DecodeWays91();
-		System.out.println(obj.numDecodings("09"));
+		System.out.println(obj.numDecodings("27"));
 	}
-
+/*
     public int numDecodings(String s) {
     	int c[]= new int[s.length()];
         for (int i=0; i<s.length(); i++) {
@@ -89,5 +89,25 @@ s contains only digits and may contain leading zero(s).
         }
         return c[s.length()-1];
     }
+    */
     
+    public int numDecodings(String s) {
+    	if (s.length() == 0 || s.charAt(0) == '0')
+    		return 0;
+    	int prevPrev = 1, prev=1;
+    	for (int i=1; i<s.length(); i++) {
+    		int d = s.charAt(i) - '0';
+    		int dd = (s.charAt(i-1) - '0')*10 + d;
+        	int count=0;
+    		if (d > 0) {
+    			count = prev;
+    		}
+    		if (dd >= 10 && dd <= 26) {
+    			count += prevPrev;
+    		}
+    		prevPrev = prev;
+    		prev = count;
+    	}
+    	return prev;
+    }
 }

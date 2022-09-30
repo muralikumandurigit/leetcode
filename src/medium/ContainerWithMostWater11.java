@@ -1,4 +1,4 @@
-package hard;
+package medium;
 
 public class ContainerWithMostWater11 {
 

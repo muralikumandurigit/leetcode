@@ -1,7 +1,15 @@
-package easy;
+package medium;
 
 public class MaximumSubarray53 {
 
+	/*
+	 * 
+Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+  
+A subarray is a contiguous part of an array.
+
+ 
+	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
