@@ -1,7 +1,9 @@
 package hard;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FallingSquares699 {
 
@@ -48,10 +50,45 @@ Note:
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		int positions[][] = {{1, 2}, {2, 3}, {6, 1}};
+//		int positions[][] = {{100, 100}, {200, 100}};
+//		int positions[][] = {};
+//		int positions[][] = {{9, 7}, {1, 9}, {3, 1}};
+//		int positions[][] = {{2, 1}, {2, 9}, {1, 8}};
+//		int positions[][] = {{50,47},{95,48},{88,77},{84,3}, {53,87}, {98,79}, {88,28},{13,22},{53,73},{85,55}};
+//		int positions[][] = {{50,47},{95,48},{88,77},{84,3}, {53,87}};
+//		int positions[][] = {{1,47},{46,48},{39,77},{35,3}, {4,87}};
+		FallingSquares699 obj = new FallingSquares699();
+		List<Integer> result = obj.fallingSquares(positions);
+		System.out.println(result);
 	}
 
     public List<Integer> fallingSquares(int[][] positions) {
+        
+    	int heights[] = new int[positions.length];
+    	int maxCurHeights[] = new int[positions.length];
+    	int maxCurHeight=0;
+    	for(int i=0; i<positions.length; i++) {
+    		int start = positions[i][0];
+    		int height = positions[i][1];
+    		int end = start + height;
+    		heights[i] += height;
+    		for(int j=i+1; j<positions.length; j++) {
+    			int start2 = positions[j][0];
+    			int height2 = positions[j][1];
+    			int end2 = start2+height2;
+    			if (start2 >= end || end2 <= start) {
+    				continue;
+    			}
+    			heights[j] = Math.max(heights[i], heights[j]);	
+    		}
+    		maxCurHeight = Math.max(maxCurHeight, heights[i]);
+    		maxCurHeights[i] = Math.max(maxCurHeight, maxCurHeights[i]);
+    	}
+    	return Arrays.stream(maxCurHeights).boxed().collect(Collectors.toList());
+    }
+    
+    public List<Integer> fallingSquares1(int[][] positions) {
         
     	int heights[] = new int[positions.length];
     	List<Integer> ans = new ArrayList<>();
