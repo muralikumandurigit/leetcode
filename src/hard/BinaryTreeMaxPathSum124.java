@@ -55,7 +55,7 @@ public class BinaryTreeMaxPathSum124 {
 
 	}
 	
-    private int pathSum(TreeNode root) {
+    private int pathSum1(TreeNode root) {
     	int m;
     	if (pathSumMap.containsKey(root)) {
     		m = pathSumMap.get(root);
@@ -66,26 +66,50 @@ public class BinaryTreeMaxPathSum124 {
         	max = Math.max(max,  m);
         }
     	else if (root.left == null) {
-    		m = Math.max(root.val, root.val + pathSum(root.right));
+    		m = Math.max(root.val, root.val + pathSum1(root.right));
     		pathSumMap.put(root, m);
     		max = Math.max(max,  m);
     	}
     	else if (root.right == null) {
-    		m = Math.max(root.val, root.val + pathSum(root.left));
+    		m = Math.max(root.val, root.val + pathSum1(root.left));
     		pathSumMap.put(root, m);
     		max = Math.max(max,  m);
     	}
     	else {
-    		m = Math.max(root.val, root.val + Math.max(pathSum(root.right), pathSum(root.left)));
+    		m = Math.max(root.val, root.val + Math.max(pathSum1(root.right), pathSum1(root.left)));
     		pathSumMap.put(root, m);
-    		max = Math.max(max, root.val + pathSum(root.left) + pathSum(root.right));
+    		max = Math.max(max, root.val + pathSum1(root.left) + pathSum1(root.right));
     		max = Math.max(max, m);
     	}
     	return m;
     }
     
-    public int maxPathSum(TreeNode root) {
-    	pathSum(root);
+    public int maxPathSum1(TreeNode root) {
+    	pathSum1(root);
     	return max;
+    }
+    
+    public int maxPathSum(TreeNode root) {
+        return pathSum(root);
+    }
+    
+    public int pathSum(TreeNode root) {
+    	if (root == null) {
+    		return 0;
+    	}
+    	
+    	if (root.left == null && root.right == null) {
+    		return root.val;
+    	}
+    	else if (root.left == null) {
+    		return Math.max(root.val, root.val + pathSum(root.right));
+    	}
+    	else if (root.right == null) {
+    		return Math.max(root.val, root.val + pathSum(root.left));
+    	}
+    	else {
+    		int t = Math.max(pathSum(root.left), pathSum(root.right));
+    		return Math.max(root.val, t);
+    	}
     }
 }
