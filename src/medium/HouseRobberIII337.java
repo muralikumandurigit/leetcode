@@ -100,6 +100,8 @@ public class HouseRobberIII337 {
         Stack<TreeNode> stk = new Stack<>();
         Queue<TreeNode> traverseQ = new LinkedList<>();
         traverseQ.offer(root);
+
+        // Push all the elements to stack in level order from root.
         while(!traverseQ.isEmpty()) {
             TreeNode t = traverseQ.poll();
             if (t.left != null) {
